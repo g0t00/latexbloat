@@ -19,5 +19,3 @@ CMD /bin/bash
 
 
 RUN pip3 install numpy matplotlib pandas
-# RUN sudo apt-get update && sudo apt-get install -y poppler-utils && sudo rm -rf /var/lib/apt/lists/*
-# RUN sudo apt-get update && sudo apt-get install -y libxcomposite1 libxcursor1 libxtst6 libgdk-pixbuf2.0-0 libgtk-3-0 && sudo rm -rf /var/lib/apt/lists/*
