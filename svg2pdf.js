@@ -15,7 +15,7 @@ if (process.argv.length !== 4) {
   const file = fs.readFileSync(input, {encoding: 'utf-8'});
   const [, width] = file.match(/\<.*?width="(.*?)px"/);
   const [, height] = file.match(/\<.*?height="(.*?)px"/);
-  console.log(width, height);
+  // console.log(width, height);
 
   await page.goto(`file://${input}`, {waitUntil: 'networkidle2'});
   await page.pdf({path: output, width: `${parseInt(width) + 10}px`, height: `${parseInt(height) + 10}px`});
