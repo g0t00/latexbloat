@@ -13,8 +13,8 @@ if (process.argv.length !== 4) {
   const input = process.cwd() + '/' + process.argv[2];
   const output = process.cwd() + '/' + process.argv[3];
   const file = fs.readFileSync(input, {encoding: 'utf-8'});
-  const [, width] = file.match(/\<.*?width="(.*?)px"/);
-  const [, height] = file.match(/\<.*?height="(.*?)px"/);
+  const [, width] = file.match(/\<[\s\S]*?width="(.*?)(?:px)?"/);
+  const [, height] = file.match(/\<[\s\S]*?height="(.*?)(?:px)?"/);
   // console.log(width, height);
 
   await page.goto(`file://${input}`, {waitUntil: 'networkidle2'});
