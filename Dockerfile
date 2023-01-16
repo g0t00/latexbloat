@@ -8,14 +8,15 @@ COPY install-tex-without-doc.py /install-tex-without-doc.py
 RUN apt-get update && python3 /install-tex-without-doc.py && rm -rf /var/lib/apt/lists/*
 RUN curl -L https://raw.githubusercontent.com/tj/n/master/bin/n -o n && bash n lts
 
-RUN mkdir -p /opt/svg2pdf && cd /opt/svg2pdf && npm i puppeteer
-ADD svg2pdf.js /opt/svg2pdf/
-RUN chmod +x /opt/svg2pdf/svg2pdf.js
-RUN ln -s /opt/svg2pdf/svg2pdf.js /usr/bin/svg2pdf
-
-
 RUN adduser --disabled-password --gecos '' developer
+RUN mkdir -p /opt/js && chown -R developer:developer /opt
+USER developer
 
+COPY js /opt/js/
+RUN cd /opt/js && npm ci && npm run build
+USER root
+RUN chmod +x /opt/js/svg2pdf.js && ln -s /opt/js/svg2pdf.js /usr/bin/svg2pdf
+RUN chmod +x /opt/js/dist/bytefieldGenerator.js && ln -s /opt/js/dist/bytefieldGenerator.js /usr/bin/bytefieldGenerator
 USER developer
 ENV PATH="/home/developer/.local/bin:${PATH}"
 RUN pip3 install numpy matplotlib pandas Pygments pygments-arm
